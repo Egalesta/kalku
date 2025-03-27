@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator dengan Riwayat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        #container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #display {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            text-align: right;
+            border: none;
+            border-radius: 5px;
+            background: #eee;
+            margin-bottom: 10px;
+        }
+        #calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ddd;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ccc;
+        }
+        .operator {
+            background: #ff8c00;
+            color: white;
+        }
+        .operator:hover {
+            background: #e07b00;
+        }
+        #history {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #fafafa;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Kalkulator</h2>
+        <input type="text" id="display" disabled>
+        <div id="calculator">
+            <button class="operator" onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button class="operator" onclick="calculate()">=</button>
+            <button class="operator" onclick="appendToDisplay('/')">÷</button>
+        </div>
+        <div id="history">
+            <h3>Riwayat Perhitungan</h3>
+            <ul id="history-list"></ul>
+        </div>
+    </div>
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+        function calculate() {
+            try {
+                let expression = document.getElementById('display').value;
+                let result = eval(expression);
+                document.getElementById('display').value = result;
+                addToHistory(expression + ' = ' + result);
+            } catch (e) {
+                alert('Kesalahan dalam perhitungan!');
+            }
+        }
+        function addToHistory(entry) {
+            let historyList = document.getElementById('history-list');
+            let listItem = document.createElement('li');
+            listItem.textContent = entry;
+            historyList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
